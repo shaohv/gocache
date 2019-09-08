@@ -18,7 +18,7 @@ type Server struct {
 func (s *Server) Listen() {
 	http.Handle("/cache/", s.cacheHandler())
 	http.Handle("/status", s.statusHandler())
-	http.ListenAndServe(":7787", nil)
+	http.ListenAndServe(":12345", nil)
 }
 
 // NewServer ...

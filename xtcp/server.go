@@ -114,7 +114,7 @@ func sendResponse(value []byte, err error, conn net.Conn) error {
 		return e
 	}
 
-	vlen := fmt.Sprintf("%d", len(value))
+	vlen := fmt.Sprintf("%d ", len(value))
 	_, e := conn.Write(append([]byte(vlen), value...))
 	return e
 }

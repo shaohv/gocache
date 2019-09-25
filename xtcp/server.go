@@ -49,7 +49,7 @@ func readLen(r *bufio.Reader) (int, error) {
 
 	l, err := strconv.Atoi(strings.TrimSpace(tmp))
 	if err != nil {
-		log.Println("atoi failed")
+		log.Println("atoi failed", tmp)
 		return 0, err
 	}
 
@@ -167,7 +167,7 @@ func (s *Server) process(conn net.Conn) {
 		} else if op == 'D' {
 			e = s.del(conn, r)
 		} else {
-			log.Println("invalid operation!")
+			log.Println("invalid operation!", op)
 			return
 		}
 

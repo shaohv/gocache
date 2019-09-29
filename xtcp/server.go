@@ -108,13 +108,17 @@ func (s *Server) readKeyAndValue(r *bufio.Reader) (string, []byte, error) {
 
 func sendResponse(value []byte, err error, conn net.Conn) error {
 	if err != nil {
-		//log.Println("Response err", err)
-		//errStr := err.Error()
-		//tmp := fmt.Sprintf("%d ", len(errStr)) + errStr
-		tmp := fmt.Sprintf("%d ", 0)
-		//lenTmp := fmt.Sprintf("%d ", len(tmp))
-		//_, e := conn.Write(append([]byte(lenTmp), []byte(tmp)...))
-		_, e := conn.Write([]byte(tmp))
+		errStr := err.Error()
+		var e error
+		if cache.ErrKeyNotFound == errStr {
+			tmp := fmt.Sprintf("%d ", 0)
+			_, e = conn.Write([]byte(tmp))
+		} else {
+			log.Println("Response err", err)
+			tmp := fmt.Sprintf("%d ", len(errStr)) + errStr
+			lenTmp := fmt.Sprintf("%d ", len(tmp))
+			_, e = conn.Write(append([]byte(lenTmp), []byte(tmp)...))
+		}
 		return e
 	}
 

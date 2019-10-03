@@ -14,6 +14,7 @@ type Cacher interface {
 const (
 	TypeInMemCache   = "inmemory"
 	TypeRocksdbCache = "rocksdb"
+	BATCH_SIZE       = 100
 )
 
 //ErrKeyNotFound ...

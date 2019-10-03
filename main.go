@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"gocache/cache"
 	"gocache/xhttp"
@@ -8,8 +9,10 @@ import (
 )
 
 func main() {
-	fmt.Println("cache starting ...")
-	c := cache.NewCacher(cache.TypeInMemCache)
+	typ := flag.String("type", "inmemory", "cache type")
+	flag.Parse()
+	fmt.Println("cache starting ...", *typ)
+	c := cache.NewCacher(*typ)
 	go xtcp.NewServer(c).Listen()
 	xhttp.NewServer(c).Listen()
 }

@@ -11,7 +11,10 @@ type Cacher interface {
 }
 
 //TypeInMemCache ...
-const TypeInMemCache = "inMemCache"
+const (
+	TypeInMemCache   = "inmemory"
+	TypeRocksdbCache = "rocksdb"
+)
 
 //ErrKeyNotFound ...
 const ErrKeyNotFound = "ErrKeyNotFound"
@@ -21,6 +24,8 @@ func NewCacher(typ string) Cacher {
 	var c Cacher
 	if typ == TypeInMemCache {
 		c = newInMemCache()
+	} else if typ == TypeRocksdbCache {
+		c = newRocksdbCache()
 	}
 	if c == nil {
 		panic("Unkonwn cache type" + typ)
